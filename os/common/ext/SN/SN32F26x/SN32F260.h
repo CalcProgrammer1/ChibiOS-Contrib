@@ -37,6 +37,10 @@
 #ifndef SN32F260_H
 #define SN32F260_H
 
+#if !defined(SN32F260)
+#define SN32F260
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -1726,7 +1730,9 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
     __IO uint32_t  MCTRL3;                          /*!< Offset:0x1C CT16Bn Match Control Register                             */
     
     struct {
-           uint32_t             :  3;
+      __IOM uint32_t MR20IE     :  1;               /*!< [0..0] Enable generating an interrupt when MR20 matches TC                */
+      __IOM uint32_t MR20RST    :  1;               /*!< [1..1] Enable reset TC when MR20 matches TC                               */
+      __IOM uint32_t MR20STOP   :  1;               /*!< [2..2] Stop TC and PC and clear CEN bit when MR20 matches TC              */
       __IO uint32_t  MR21IE     :  1;               /*!< Enable generating an interrupt when MR21 matches TC                   */
       __IO uint32_t  MR21RST    :  1;               /*!< Enable reset TC when MR21 matches TC                                  */
       __IO uint32_t  MR21STOP   :  1;               /*!< Stop TC and PC and clear CEN bit when MR21 matches TC                 */
@@ -1758,7 +1764,7 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
   __IO uint32_t  MR17;                              /*!< Offset:0x64 CT16Bn MR17 Register                                      */
   __IO uint32_t  MR18;                              /*!< Offset:0x68 CT16Bn MR18 Register                                      */
   __IO uint32_t  MR19;                              /*!< Offset:0x6C CT16Bn MR19 Register                                      */
-  __I  uint32_t  RESERVED1;
+  __IO uint32_t  MR20;                              /*!< Offset:0x6C CT16Bn MR20 Register                                      */
   __IO uint32_t  MR21;                              /*!< Offset:0x74 CT16Bn MR21 Register                                      */
   __IO uint32_t  MR22;                              /*!< Offset:0x78 CT16Bn MR22 Register                                      */
   __IO uint32_t  MR23;                              /*!< Offset:0x7C CT16Bn MR23 Register                                      */
@@ -1808,7 +1814,8 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
                                                          and also drive the state of CT16Bn_PWM2 output.                       */
       __IO uint32_t  EM19       :  1;               /*!< When the TC matches MR19, this bit will act according to EMC19[1:0],
                                                          and also drive the state of CT16Bn_PWM3 output.                       */
-           uint32_t             :  1;
+      __IO uint32_t  EM20       :  1;               /*!< When the TC matches MR20, this bit will act according to EMC20[1:0],
+                                                         and also drive the state of CT16Bn_PWM3 output.                       */
       __IO uint32_t  EM21       :  1;               /*!< When the TC matches MR21, this bit will act according to EMC21[1:0],
                                                          and also drive the state of CT16Bn_PWM1 output.                       */
       __IO uint32_t  EM22       :  1;               /*!< When the TC matches MR22, this bit will act according to EMC22[1:0],
@@ -1847,7 +1854,7 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
       __IO uint32_t  EMC17      :  2;               /*!< CT16Bn_PWM17 functionality                                            */
       __IO uint32_t  EMC18      :  2;               /*!< CT16Bn_PWM18 functionality                                            */
       __IO uint32_t  EMC19      :  2;               /*!< CT16Bn_PWM19 functionality                                            */
-           uint32_t             :  2;
+      __IO uint32_t  EMC20      :  2;               /*!< CT16Bn_PWM20 functionality                                            */
       __IO uint32_t  EMC21      :  2;               /*!< CT16Bn_PWM21 functionality                                            */
       __IO uint32_t  EMC22      :  2;               /*!< CT16Bn_PWM22 functionality                                            */
     } EMC2_b;                                       /*!< BitSize                                                               */
@@ -1884,7 +1891,7 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
       __IO uint32_t  PWM17MODE  :  2;               /*!< PWM17 output mode                                                     */
       __IO uint32_t  PWM18MODE  :  2;               /*!< PWM18 output mode                                                     */
       __IO uint32_t  PWM19MODE  :  2;               /*!< PWM19 output mode                                                     */
-           uint32_t             :  2;
+      __IO uint32_t  PWM20MODE  :  2;               /*!< PWM20 output mode                                                     */
       __IO uint32_t  PWM21MODE  :  2;               /*!< PWM21 output mode                                                     */
       __IO uint32_t  PWM22MODE  :  2;               /*!< PWM22 output mode                                                     */
     } PWMCTRL2_b;                                   /*!< BitSize                                                               */
@@ -1914,7 +1921,7 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
       __IO uint32_t  PWM17EN    :  1;               /*!< PWM17 enable                                                          */
       __IO uint32_t  PWM18EN    :  1;               /*!< PWM18 enable                                                          */
       __IO uint32_t  PWM19EN    :  1;               /*!< PWM19 enable                                                          */
-           uint32_t             :  1;
+      __IO uint32_t  PWM20EN    :  1;               /*!< PWM20 enable                                                          */
       __IO uint32_t  PWM21EN    :  1;               /*!< PWM21 enable                                                          */
       __IO uint32_t  PWM22EN    :  1;               /*!< PWM22 enable                                                          */
     } PWMENB_b;                                     /*!< BitSize                                                               */
@@ -1944,7 +1951,7 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
       __IO uint32_t  PWM17IOEN  :  1;               /*!< CT16Bn_PWM17/GPIO selection                                           */
       __IO uint32_t  PWM18IOEN  :  1;               /*!< CT16Bn_PWM18/GPIO selection                                           */
       __IO uint32_t  PWM19IOEN  :  1;               /*!< CT16Bn_PWM19/GPIO selection                                           */
-           uint32_t             :  1;
+      __IO uint32_t  PWM20IOEN  :  1;               /*!< CT16Bn_PWM20/GPIO selection                                           */
       __IO uint32_t  PWM21IOEN  :  1;               /*!< CT16Bn_PWM21/GPIO selection                                           */
       __IO uint32_t  PWM22IOEN  :  1;               /*!< CT16Bn_PWM22/GPIO selection                                           */
     } PWMIOENB_b;                                   /*!< BitSize                                                               */
@@ -1974,7 +1981,7 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
       __I  uint32_t  MR17IF     :  1;               /*!< Match channel 17 interrupt flag                                       */
       __I  uint32_t  MR18IF     :  1;               /*!< Match channel 18 interrupt flag                                       */
       __I  uint32_t  MR19IF     :  1;               /*!< Match channel 19 interrupt flag                                       */
-           uint32_t             :  1;
+      __I  uint32_t  MR20IF     :  1;               /*!< Match channel 20 interrupt flag                                       */
       __I  uint32_t  MR21IF     :  1;               /*!< Match channel 21 interrupt flag                                       */
       __I  uint32_t  MR22IF     :  1;               /*!< Match channel 22 interrupt flag                                       */
       __I  uint32_t  MR23IF     :  1;               /*!< Match channel 23 interrupt flag                                       */
@@ -2005,7 +2012,7 @@ typedef struct {                                    /*!< SN_CT16B1 Structure    
       __O  uint32_t  MR17IC     :  1;               /*!< MR17IF clear bit                                                      */
       __O  uint32_t  MR18IC     :  1;               /*!< MR18IF clear bit                                                      */
       __O  uint32_t  MR19IC     :  1;               /*!< MR19IF clear bit                                                      */
-           uint32_t             :  1;
+      __O  uint32_t  MR20IC     :  1;               /*!< MR20IF clear bit                                                      */
       __O  uint32_t  MR21IC     :  1;               /*!< MR21IF clear bit                                                      */
       __O  uint32_t  MR22IC     :  1;               /*!< MR22IF clear bit                                                      */
       __O  uint32_t  MR23IC     :  1;               /*!< MR23IF clear bit                                                      */

@@ -409,10 +409,14 @@ Base Address: 0x4000 0000 (CT16B0)
 #define mskCT16_MR23STOP_EN			(CT16_MR23STOP_EN<<11)
 #define mskCT16_MR23STOP_DIS		(CT16_MR23STOP_DIS<<11)
 
+#if defined(SN32F240B)
 #define	CT16_MR24IE_EN					1			//[12:12] Enable MR24 match interrupt
 #define	CT16_MR24IE_DIS					0
 #define mskCT16_MR24IE_EN				(CT16_MR24IE_EN<<12)
 #define mskCT16_MR24IE_DIS			(CT16_MR24IE_DIS<<12)
+#else
+#define	CT16_MR24IE_EN					0			//[12:12] Enable MR24 match interrupt
+#endif
 
 #define	CT16_MR24RST_EN					1			//[13:13] Enable reset TC when MR24 matches TC.
 #define	CT16_MR24RST_DIS				0
