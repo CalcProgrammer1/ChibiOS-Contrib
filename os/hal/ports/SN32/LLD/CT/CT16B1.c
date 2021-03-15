@@ -323,6 +323,7 @@ void	CT16B1_IRQHandler(void)
 			SN_CT16B1->IC = mskCT16_MR23IC;	//Clear MR23 match interrupt status
 		}
 	}
+#if CT16_MR24IE_EN
 	//MR24
 	if (SN_CT16B1->MCTRL3_b.MR24IE)				//Check if MR24 IE enables?
 	{
@@ -332,6 +333,7 @@ void	CT16B1_IRQHandler(void)
 			SN_CT16B1->IC = mskCT16_MR24IC;	//Clear MR24 match interrupt status
 		}
 	}
+#endif
 }
 
 

@@ -34,6 +34,10 @@
 #ifndef SN32F240B_H
 #define SN32F240B_H
 
+#if !defined(SN32F240B)
+#define SN32F240B
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif
